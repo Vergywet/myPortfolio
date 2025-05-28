@@ -1,0 +1,366 @@
+first person shooter
+like that
+7min drill
+push
+tylor made freestyle
+euphoria
+6:16
+family matters
+meet the grahams
+not like us
+bbl drizzy
+
+
+npm install firebase
+-----------------------------------
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Top />
+      <Body />
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+-----------------------------------
+-----------------------------------
+import * as React from "react";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "../Screens/login";
+import Chats from "../Screens/Chats";
+import Message from "../Components/Message";
+import Home from "../HomeSubSystemStackPages/HomeScreen";
+
+const Stack = createNativeStackNavigator();
+
+export default MyStack = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ title: "Welcome" }}
+        />
+        <Stack.Screen name="Chats" component={Chats} />
+        <Stack.Screen
+          name="Message"
+          component={Message}
+          options={{ title: "Conversation" }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+-----------------------------------
+-----------------------------------
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Button } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./Screens/login";
+import Chats from "./Screens/Chats";
+
+const Stack = createNativeStackNavigator();
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <NavigationContainer>
+        {/* <Login /> */}
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="L" component={Login} />
+          <Stack.Screen name="C" component={Chats} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+-----------------------------------
+-----------------------------------
+Login.
+-------------------------
+import React from "react";
+import { View, Text, StyleSheet, Image, Button, TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Chats from "./Chats.js";
+
+const Login = () => {
+  const navigation = useNavigation();
+  return (
+    <View style={style.container}>
+      <View style={style.buble1}></View>
+      <View style={style.buble2}></View>
+      <View style={style.buble3}></View>
+
+      <View style={style.content}>
+        <View style={style.imgControl}>
+          <Image style={style.img} source={require("../Img/SCA_logo.png")} />
+        </View>
+
+        <View style={style.inputControl}>
+          <TextInput style={style.input} placeholder="Username"></TextInput>
+          <TextInput style={style.input} placeholder="Password"></TextInput>
+          <Button
+            style={style.button}
+            fontSize={20}
+            color="#ffffff"
+            title="Login"
+            onPress={() => navigation.navigate("Chats")}
+          />
+        </View>
+      </View>
+      <Text style={style.text}>No Problem Is Too Small.</Text>
+    </View>
+  );
+};
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    position: "relative",
+  },
+  buble1: {
+    position: "absolute",
+    width: 300,
+    height: 300,
+    backgroundColor: "red",
+    borderRadius: 150,
+    top: -120,
+    left: -30,
+  },
+  buble2: {
+    position: "absolute",
+    width: 300,
+    height: 300,
+    backgroundColor: "#FDDE55",
+    borderRadius: 150,
+    top: 40,
+    left: -200,
+  },
+  buble3: {
+    position: "absolute",
+    width: 200,
+    height: 200,
+    backgroundColor: "#fefefe",
+    borderRadius: 150,
+    top: -40,
+    left: -100,
+  },
+  imgControl: {
+    width: 350,
+  },
+  img: {
+    width: 300,
+    height: 300,
+  },
+  content: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    color: "#ffffff",
+    fontSize: 25,
+    borderColor: "070F2B",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 10,
+    minWidth: "90%",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  button: {
+    color: "#ffffff",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  text: {
+    color: "#ffffff",
+    fontSize: 20,
+    marginTop: 30,
+  },
+});
+
+export default Login;
+-----------------------------------
+CHATS.
+------------------
+import React from "react";
+import { StatusBar } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+import Top from "../Components/TopSection.js";
+import Body from "../Components/bodySection.js";
+
+const Chats = () => {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.container}>
+      <Top />
+      <Body />
+      <Button title="To Back" onPress={() => navigation.navigate("Login")} />
+      <StatusBar style="auto" />
+    </View>
+  );
+};
+
+export default Chats;
+
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+
+
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDdVlbm7n1Hkh_8_u2i2UYXmF50e-j3UTM",
+  authDomain: "studentcounsellingsystem-611fb.firebaseapp.com",
+  projectId: "studentcounsellingsystem-611fb",
+  storageBucket: "studentcounsellingsystem-611fb.appspot.com",
+  messagingSenderId: "586511845307",
+  appId: "1:586511845307:web:6b9e880e5c64925d4ca69e",
+  measurementId: "G-G2FWREHEHW"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+---------------------------------------------
+npm install -g firebase-tools
+---------------------------------------------
+firebase login
+--------------------------------------------
+---------------------------------------------
+----------------------------------------------
+---------------------------------------------
+----------------------------------------------
+So, we are working on a Student Counselling System project on DS3, long story short we have a feature that will allow students to chat/message with their counsellors and this should be in real-time. The dilemer we are facing now is decide which DB to implement. I understand that firebase support real-time data update, but it doesn't support relationships, which we need to link sender and intended receiver. SQL’s, I think they out of discussion for this functionality since they can’t update in real time. I’ve seen the alternative, supabase but to achieve real-time data update, I understand they a lot of technologies needed for this.
+---------------------------------------------
+----------------------------------------------
+Certainly! Here are **some alternative closing phrases** you can use to end your emails, depending on the tone and context:
+
+1. **Best regards**: A common and neutral way to sign off. It works well in most situations¹.
+2. **Warmest regards**: A warmer and more personal variation of "best regards" that conveys friendliness.
+3. **Thanks again**: Expresses gratitude and appreciation for the recipient's time or assistance.
+4. **Take care**: A friendly and caring sign-off, especially suitable for informal or familiar emails.
+5. **Looking forward to our next conversation**: Indicates anticipation for future communication.
+6. **Wishing you all the best**: A positive and well-wishing closing phrase.
+7. **With gratitude**: A formal way to express appreciation.
+8. **Best wishes for a successful week**: A motivational sign-off for professional emails².
+
+Remember to choose a closing that aligns with the tone of your email and your relationship with the recipient. Feel free to mix and match based on the context! 😊📧
+--------------------------------------------
+---------------------------------------------
+Certainly! A **calculated value** in a database is often referred to as a **computed column** or a **derived attribute**. Let me explain further:
+
+- **Computed Column**: This is a column whose value is automatically calculated based on expressions or functions involving other columns within the same table. It doesn't store data directly but derives its value dynamically during queries or data retrieval. Examples include calculating the total cost of an invoice line based on price and quantity¹.
+
+- **Derived Attribute**: An attribute (column) whose value is derived from other attributes. It represents additional information that can be calculated from existing data. For instance, a customer's current balance (derived from charges and payments) or the daily nutritional intake of foods (based on portion energy) are derived attributes¹².
+
+Remember, while storing calculated values can improve query performance, it's essential to weigh the trade-offs between storage efficiency and potential maintenance complexities. 😊📊
+
+Source: Conversation with Copilot, 2024/05/26
+(1) Bad Practice to Store Calculated Data in Database?. https://dba.stackexchange.com/questions/202758/bad-practice-to-store-calculated-data-in-database.
+(2) Should I store a calculate value in my database along with the .... https://stackoverflow.com/questions/8529586/should-i-store-a-calculate-value-in-my-database-along-with-the-variables.
+(3) What Are Calculated Values and Table Calculations in Tableau? - MindMajix. https://mindmajix.com/tableau/what-are-calculated-values-and-table-calculations.
+(4) MS SQL Server - Use Calculated Field of SELECT statement. https://stackoverflow.com/questions/48785168/ms-sql-server-use-calculated-field-of-select-statement.
+(5) Is storing calculated values in database a bad idea?. https://stackoverflow.com/questions/50215879/is-storing-calculated-values-in-database-a-bad-idea.
+----------------------------------------------
+---------------------------------------------
+1.INTRODUCTION
+ 1.1 Purpose
+ 1.2 Project Aims & Objectives
+2 SYSTEM ARCHITECTURE
+ 2.1 System Hardware Architecture
+ 2.2 System Software Architecture
+ 2.3 internal Communication Architecture (Network Architecture)
+3 DATABASE
+4 USER INTERFACE
+ 4.1 input
+ 4.2 output (Report)
+5 EXTERNAL INTERFACES
+ 5.1 Interface Architeture
+ 5.2 Interface Detailed Design 
+6 System Integrity Controls
+----------------------------------------------
+--------------------------------------------
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import Home from "./src/TapTop/Home";
+import Detail from "./src/TabBottom/Detail";
+import Profile from "./src/TapTop/Profile";
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function StackNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Detail" component={Detail} />
+    </Stack.Navigator>
+  );
+}
+
+function TabNavigator() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={StackNavigator} />
+      <Tab.Screen name="Profile" component={Profile} />
+    </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <TabNavigator />
+    </NavigationContainer>
+  );
+}
+
+---------------------------------------------
+----------------------------------------------
+---------------------------------------------
+----------------------------------------------
+--------------------------------------------
+---------------------------------------------
+----------------------------------------------
+---------------------------------------------
+----------------------------------------------
+--------------------------------------------
+---------------------------------------------
+----------------------------------------------
+---------------------------------------------
+----------------------------------------------

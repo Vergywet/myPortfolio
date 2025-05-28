@@ -1,0 +1,357 @@
+https://www.figma.com/team_invite/redeem/SHjdI6yp97KLC4SStWsOTw
+Hammarsdale Junction Mall, Kunene Rd, Hammarsdale, Durban, 3700
+
+-----------------------------------------------ADDRESS RELATION
+CREATE TABLE `ADDRESS`
+(
+ `address_id` INTEGER AUTO_INCREMENT NOT NULL,
+ `country`    VARCHAR(50) NOT NULL,
+ `province`   VARCHAR(50) NOT NULL,
+ `city`       VARCHAR(50) NOT NULL,
+ `street`     VARCHAR(50) NOT NULL,
+ `zip_code`   INTEGER NOT NULL,
+
+ CONSTRAINT `Address_address_id` PRIMARY KEY (`address_id` ASC)
+);
+CREATE INDEX address_index ON ADDRESS(city);
+--------------------------------------------
+INSERT INTO ADDRESS(Country, Province, City, Street, Zip_code)
+VALUES('South Africa', 'KwaZulu Natal', 'Durban', '16 Soldiers Rd', 4001),
+	('South Africa', 'Western Cape', 'Cape Town', '16 Roland Rd', 2367),
+	('America', 'New York', 'New York City', 'Benjamin Rd', 11462),
+	('Unknown', 'MaginaryState', 'OuterSpace', '6th Ev Flow Rd', 666),
+	('South Africa', 'Gauteng', 'Pretoria', 'Jozi Rd', 30711);
+--------------------------------------------
+-----------------------------------------------STUDENT RELATION
+CREATE TABLE STUDENT (
+  stu_id BIGINT NOT NULL AUTO_INCREMENT,
+  stu_fname VARCHAR(50) NOT NULL,
+  stu_lname VARCHAR(50) NOT NULL,
+  stu_DOB DATE NOT NULL,
+  stu_gender CHAR(1) NOT NULL CHECK (stu_gender IN ('M', 'F')),
+  stu_email VARCHAR(50) NOT NULL,
+  stu_phone VARCHAR(10) NOT NULL,
+  stu_signup_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_password CHAR(200),
+  stu_address INTEGER,
+  PRIMARY KEY (stu_id),
+  CONSTRAINT stu_address_fk FOREIGN KEY (stu_address) REFERENCES ADDRESS(address_id)
+);
+CREATE INDEX student_name_index ON STUDENT(stu_fname, stu_lname);
+ALTER TABLE STUDENT AUTO_INCREMENT=22222200;
+------------------------------------------------------
+INSERT INTO student(`stu_fname`, `stu_lname`, `stu_DOB`, `stu_gender`, `stu_email`, `stu_phone`, `stu_password`, `stu_address`)
+VALUES
+('Nkosi', 'Ngcobo', '2006-03-18', 'M', 'nkosi@mail.com', '1234567890','12345',1),
+('Noxolo', 'Dladla', '1999-01-01', 'F', 'xolo@gmail.com','2345678900','67890', 2),
+('Thulan', 'Dladla', '1998-06-12', 'M', 'thulan@mail.com','1234567890','12345', 3),
+('Annie', 'Leonhgort', '2002-01-01', 'F', 'annie@mail.com','234567890','67890', 4),
+('Madara', 'Uchiha', '1998-12-12', 'M', 'madara@mail.com','123456789','12345', 5);
+---------------------------------
+ALTER TABLE student
+ADD COLUMN course VARCHAR(255) NOT NULL,
+ADD COLUMN year VARCHAR(255) NOT NULL,
+ADD COLUMN faculty INT NOT NULL ,
+ADD FOREIGN KEY (department_id) REFERENCES department(department_id)
+AFTER stu_phone;
+-----------------------------------------------COUNSELLOR RELATION
+CREATE TABLE COUNSELLOR (
+  counsellor_id BIGINT NOT NULL AUTO_INCREMENT,
+  counsellor_fname VARCHAR(50) NOT NULL,
+  counsellor_lname VARCHAR(50) NOT NULL,
+  counsellor_DOB DATE NOT NULL,
+  counsellor_gender CHAR(1) NOT NULL CHECK (counsellor_gender IN ('M', 'F')),
+  counsellor_email VARCHAR(50) NOT NULL,
+  counsellor_phone VARCHAR(10) NOT NULL,
+  counsellor_signup_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  counsellor_password CHAR(200),
+  counsellor_address INTEGER,
+  PRIMARY KEY (counsellor_id),
+  CONSTRAINT counsellor_address_fk FOREIGN KEY (counsellor_address) REFERENCES ADDRESS(address_id)
+
+);
+CREATE INDEX student_index ON COUNSELLOR(counsellor_fname, counsellor_lname );
+ALTER TABLE COUNSELLOR AUTO_INCREMENT=200220;
+-------------------------------------
+INSERT INTO counsellor(`counsellor_fname`,`counsellor_lname`, `counsellor_DOB`, `counsellor_gender`, `counsellor_email`, `counsellor_phone`,`counsellor_password`,`counsellor_address`)
+VALUES
+('Naruto', 'Uzumaki', '1996-12-12', 'M', 'NarutoUzumaki@mail.com', '0987654321', 'boruto', 2),
+('Sasuke', 'Uchiha', '1996-12-11', 'M', 'sasuke@mail.com', '0987654321', 'sadara', 2),
+('Mikasa', 'Ackherman', '1998-01-01', 'F', 'mikasa@mail.com', '2345678900', 'eren', 4),
+('Eren', 'Yeager', '1997-01-01', 'M', 'eren@mail.com', '2345678900', 'attack', 4);
+-----------------------------------------------ADMIN RELATION
+CREATE TABLE ADMINISTRATOR (
+  admin_id BIGINT NOT NULL AUTO_INCREMENT,
+  admin_fname VARCHAR(50) NOT NULL,
+  admin_lname VARCHAR(50) NOT NULL,
+  admin_DOB DATE NOT NULL,
+  admin_gender CHAR(1) NOT NULL CHECK (admin_gender IN ('M', 'F')),
+  admin_email VARCHAR(50) NOT NULL,
+  admin_phone VARCHAR(10) NOT NULL,
+  admin_signup_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  admin_password CHAR(200),
+  admin_address INTEGER,
+  PRIMARY KEY (admin_id),
+  CONSTRAINT admin_address_fk FOREIGN KEY (admin_address) REFERENCES ADDRESS(address_id)
+);
+
+CREATE INDEX admin_index ON ADMINISTRATOR(admin_fname);
+ALTER TABLE ADMINISTRATOR AUTO_INCREMENT=1011100;
+------------------------------------
+insert into administrator(admin_fname, admin_lname, admin_DOB, admin_gender, admin_email, admin_phone, admin_password, admin_address)
+values('Gojo', 'Saturo', '1999-01-01', 'M', 'gojo@mail.com', '0123456789', '12345', 1);
+
+------------------------------------------------SERVICES
+create table service(
+	service_id int not null unique AUTO_INCREMENT,
+    service_name varchar(200) not null UNIQUE,
+    service_description text,
+    
+    CONSTRAINT PRIMARY key(service_id)
+);
+
+
+-----------------------------------------------EVENTS RELATION
+CREATE TABLE EVENTS (
+  event_id BIGINT NOT NULL AUTO_INCREMENT,
+  event_name VARCHAR(50) NOT NULL,
+  event_description TEXT NOT NULL,
+  event_location VARCHAR(50) NOT NULL,
+  event_date DATE NOT NULL,
+  event_created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  admin_id BIGINT,
+  CONSTRAINT EVENT_admin_id_fk FOREIGN KEY (admin_id) REFERENCES ADMINISTRATOR(admin_id),
+  PRIMARY KEY (event_id)
+);
+CREATE INDEX event_index ON EVENTS(event_name);
+ALTER TABLE EVENTS AUTO_INCREMENT=10930;
+--------------------------------------
+INSERT INTO EVENTS(`event_name`, `event_description`, `event_location`, `event_date`, `admin_id`)
+VALUES
+('Sexual Assault Awareness Month (SAAM)', 'Held annually in April, SAAM includes events and activities that educate students about consent, sexual violence prevention, and resources available to survivors. Events may include workshops, self-defense classes, survivor speak-outs, and awareness campaigns to foster a safe and supportive campus environment.', 'Student Center', '2024-04-01 12:00:00', 1011100),
+('Academic Stress Workshop', 'These workshops help students manage the pressures of academic life, including test anxiety, time management, and study techniques. Counselors provide strategies for coping with stress, improving focus, and maintaining a healthy school-life balance.', 'Student Center', '2024-06-13 12:30:00', 1011100),
+('Career Counseling Sessions', 'Career counseling sessions assist students in exploring career options, identifying their strengths and interests, and planning their career paths. Counselors provide guidance on choosing majors, preparing resumes, and developing job search skills, including interview preparation.', 'Student Center', '2024-06-21 14:00:00', 1011100),
+('Mental Health Awareness Seminars', ' These seminars aim to educate students about mental health issues such as depression, anxiety, and stress. They provide information on recognizing symptoms, seeking help, and accessing resources. The goal is to reduce stigma and promote a supportive campus environment.', 'Bozoll Holl', '2024-07-01 10:30:00', 1011100),
+('Substance Abuse Education and Support', 'These events focus on educating students about the risks and effects of substance abuse, including alcohol and drugs. They offer support for students struggling with addiction, provide resources for treatment, and promote healthy, substance-free lifestyles through workshops and support groups.', 'Student Center', '2024-07-30 13:20:00', 1011100);
+
+-----------------------------------------------COMMON_ISSUES RELATION
+CREATE TABLE COMMON_ISSUES(
+	common_issue_id BIGINT NOT NULL AUTO_INCREMENT,
+	common_issue_name VARCHAR(50) NOT NULL UNIQUE,
+	common_issue_description TEXT NOT NULL,
+	common_issue_created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+	admin_id BIGINT,
+	
+	CONSTRAINT ISSUE_admin_id_fk FOREIGN KEY (admin_id) REFERENCES ADMINISTRATOR(admin_id),
+	PRIMARY KEY (common_issue_id)
+);
+CREATE INDEX issue_index ON COMMON_ISSUES(common_issue_name);
+ALTER TABLE COMMON_ISSUES AUTO_INCREMENT=90460;
+-------------------------------------------
+INSERT INTO common_issues(`common_issue_name`, `common_issue_description`) 
+VALUES
+('Relationship & family problems (break-up;’ pressure)', 'Students often face challenges in their personal relationships, such as break-ups, family conflicts, and pressure from familial expectations. These issues can lead to emotional distress, impacting their academic performance and overall well-being.'),
+('Personal development needs (low self-esteem; poor self confidence, lack of assertiveness; stress management)', 'Many students struggle with low self-esteem, poor self-confidence, and lack of assertiveness, which can hinder their personal and academic growth. Stress management is also a critical need, as students often deal with high levels of academic and social pressure.'),
+('Grief/ bereavement , Trauma', 'Experiencing the loss of a loved one or going through traumatic events can deeply affect a students emotional health. Grief and trauma can lead to difficulties in concentrating, maintaining relationships, and performing academically.'),
+('Adjustment challenges (First-year experience)', 'Students commonly face psychological issues such as anxiety, depression, and substance dependence. These mental health challenges can severely impact their ability to function effectively in both their personal and academic lives.'),
+('Psychological issues such as anxiety, depression , substance dependence', 'Psycho-social issues, including relationship problems, financial stress, and social isolation, can interfere with a students academic performance. These issues often lead to difficulties in concentration, motivation, and overall academic achievement.'),
+('Career confusion/ dissatisfaction', 'Many students experience confusion and dissatisfaction regarding their career choices. This can stem from uncertainty about their interests and strengths, pressure to choose a particular career path, or dissatisfaction with their current academic program, leading to stress and anxiety about their future.');
+-----------------------------------------------EMERGENCY_RESOURCES RELATION
+CREATE TABLE EMERGENCY_RESOURCES (
+  emergency_resource_id BIGINT NOT NULL AUTO_INCREMENT,
+  emergency_resource_name VARCHAR(50) NOT NULL,
+  emergency_resource_phone VARCHAR(10) NOT NULL UNIQUE,
+  emergency_resource_created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  admin_id BIGINT,
+
+  CONSTRAINT ISSUE_admin_id_fk FOREIGN KEY (admin_id) REFERENCES ADMINISTRATOR(admin_id),
+  PRIMARY KEY (emergency_resource_id)
+);
+CREATE INDEX emergency_index ON EMERGENCY_RESOURCES(emergency_resource_name);
+ALTER TABLE EMERGENCY_RESOURCES AUTO_INCREMENT=90460;
+--------------------------------------------
+insert into emergency_resources(`emergency_resource_name`, `emergency_resource_phone`, `emergency_resource_website`, `emergency_resource_description`,`admin_id`)
+VALUES
+('South African Depression & Anxiety Group (SADAG)', '0800 567 567', 'https://www.sadag.org/', 'The South African Depression & Anxiety Group (SADAG) is a leading non-profit organization dedicated to mental health support and advocacy in South Africa. SADAG provides essential services such as free telephonic counseling, crisis intervention, and support groups for individuals suffering from depression, anxiety, and other mental health disorders. They offer educational resources, awareness campaigns, and training programs to reduce stigma and improve mental health literacy. SADAG also collaborates with healthcare professionals and communities to enhance access to mental health care and promote overall well-being.',  1011100),
+('Lifeline South Africa', '0861 322 322', 'https://lifelinesa.co.za/',  'Lifeline South Africa is a non-profit organization dedicated to promoting mental and emotional well-being. Established in 1968, Lifeline provides free, confidential support and counseling services to individuals facing various challenges, including depression, anxiety, trauma, and relationship issues', 1011100),
+('Gender Based Violence (GBV)', '0800 428 428', 'https://gbv.org.za/', 'Gender-Based Violence (GBV) support services provide critical assistance to individuals affected by physical, sexual, psychological, or economic harm based on gender. These services offer a range of support, including emergency shelter, counseling, legal advocacy, and medical care for survivors of domestic violence, sexual assault, human trafficking, and other forms of GBV. They also work on prevention through education, awareness campaigns, and community outreach programs. GBV support services aim to empower survivors, ensure their safety, and facilitate their recovery and reintegration into society. Additionally, these services often advocate for stronger laws and policies to protect individuals from GBV and hold perpetrators accountable.', 1011100),
+('Childline South Africa', '116', 'https://www.childlinesa.org.za/', 'Childline South Africa is a non-profit organization dedicated to protecting children from all forms of violence and promoting children’s rights across the country. Established in 1986, Childline provides essential services to ensure the safety and well-being of children', 1011100),
+('Department of Social Development Substance Abuse Line', '0800 12 13 14', 'https://www.gov.za/Alcoholandsubstanceabuse', 'The Department of Social Development Substance Abuse Line is a 24-hour helpline dedicated to providing support and assistance to individuals struggling with substance abuse. This service offers free, confidential counseling and information to help those affected by substance use disorders.', 1011100);
+-----------------------------------------------RATING RELATION
+CREATE TABLE RATING (
+  rating_id BIGINT NOT NULL AUTO_INCREMENT,
+  rating_star CHAR(1) NOT NULL CHECK (rating_star IN ('1','2','3','4','5')),
+  rating_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_id BIGINT,
+  counsellor_id BIGINT,
+  PRIMARY KEY (rating_id),
+  CONSTRAINT RATING_stu_id_fk FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id),
+  CONSTRAINT RATING_counsellor_id_fk FOREIGN KEY (counsellor_id) REFERENCES COUNSELLOR(counsellor_id)
+);
+CREATE INDEX rating_index ON RATING(rating_star);
+--------------------------
+insert into rating(`rating_star`, `rating_date`, `stu_id`, `counsellor_id`)
+VALUES
+	('4', '2024-07-11 12:01', 22222202, 200222),
+    ('5', '2024-07-11 15:36', 22222203, 200223),
+    ('2', '2024-07-11 16:01', 22222201, 200221),
+    ('1', '2024-07-14 21:01', 22222201, 200221),
+    ('3', '2024-07-15 13:41', 22222200, 200222),
+    ('5', '2024-07-15 12:01', 22222202, 200222),
+    ('3', '2024-07-15 22:00', 22222202, 200222),
+    ('4', '2024-07-15 09:52', 22222204, 200221),
+    ('3', '2024-07-15 11:00', 22222203, 200222),
+    ('2', '2024-07-15 12:13', 22222203, 200223),
+    ('1', '2024-07-15 12:37', 22222200, 200223),
+    ('4', '2024-07-15 16:00', 22222203, 200223),
+    ('2', '2024-07-16 12:00', 22222200, 200220),
+    ('1', '2024-07-16 12:47', 22222201, 200221),
+    ('5', '2024-07-16 13:01', 22222202, 200222),
+    ('3', '2024-07-16 13:31', 22222203, 200223),
+    ('2', '2024-07-16 13:51', 22222204, 200224),
+    ('1', '2024-07-16 14:00', 22222203, 200222),
+    ('4', '2024-07-16 16:00', 22222202, 200224),
+    ('4', '2024-07-17 12:059', 22222203, 200223),
+    ('5', '2024-07-17 16:11', 22222204, 200221),
+    ('3', '2024-07-17 17:01', 22222203, 200224);
+-----------------------------------------------APPOINTMENT RELATION
+CREATE TABLE IF NOT EXISTS APPOINTMENT (
+  appointment_id BIGINT NOT NULL AUTO_INCREMENT,
+  appointment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_id BIGINT,
+  counsellor_id BIGINT,
+  PRIMARY KEY (appointment_id),
+  INDEX appointment_index (appointment_date),
+  FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id),
+  FOREIGN KEY (counsellor_id) REFERENCES COUNSELLOR(counsellor_id)
+);
+ALTER TABLE APPOINTMENT AUTO_INCREMENT=40770;
+-----------------------------------------------SESSION RELATION
+CREATE TABLE IF NOT EXISTS SESSION (
+  session_id BIGINT NOT NULL AUTO_INCREMENT,
+  session_date DATETIME NOT NULL,
+  session_type VARCHAR(20) NOT NULL CHECK (session_type IN ('PHYSICAL', 'VIRTUAL')),
+  appointment_id BIGINT,
+  PRIMARY KEY (session_id),
+  INDEX session_index (session_type),
+  FOREIGN KEY (appointment_id) REFERENCES APPOINTMENT(appointment_id)
+);
+ALTER TABLE SESSION AUTO_INCREMENT=5100;
+-----------------------------------------------SESSION_NOTE RELATION
+CREATE TABLE IF NOT EXISTS SESSION_NOTE (
+  session_note_id BIGINT NOT NULL AUTO_INCREMENT,
+  session_note_header VARCHAR(50) NOT NULL,
+  session_note_description TEXT NOT NULL,
+  session_id BIGINT,
+  PRIMARY KEY (session_note_id),
+  INDEX session_note_index (session_note_header),
+  FOREIGN KEY (session_id) REFERENCES SESSION(session_id)
+);
+ALTER TABLE SESSION_NOTE AUTO_INCREMENT=30150;
+-----------------------------------------------COMMENT RELATION
+CREATE TABLE IF NOT EXISTS COMMENT (
+  comment_id BIGINT NOT NULL AUTO_INCREMENT,
+  comment_description TEXT NOT NULL,
+  comment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_id BIGINT,
+  PRIMARY KEY (comment_id),
+  INDEX comment_index (comment_date),
+  FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id)
+);
+-----------------------------------------------MOOD RELATION
+CREATE TABLE IF NOT EXISTS MOOD (
+  mood_id BIGINT NOT NULL AUTO_INCREMENT,
+  mood_rate VARCHAR(50) NOT NULL CHECK (mood_rate IN ('VERY SAD', 'SAD', 'NORMAL', 'HAPPY', 'VERY HAPPY')),
+  mood_rate_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_id BIGINT,
+  PRIMARY KEY (mood_id),
+  INDEX mood_index (mood_rate),
+  FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id)
+);
+ALTER TABLE MOOD AUTO_INCREMENT=1000;
+-----------------------------------------------ENROLLMENT RELATION
+CREATE TABLE IF NOT EXISTS ENROLLMENT (
+  enrollment_id BIGINT NOT NULL AUTO_INCREMENT,
+  enrollment_date DATE DEFAULT (CURRENT_DATE),
+  stu_id BIGINT,
+  course_id BIGINT,
+  PRIMARY KEY (enrollment_id),
+  INDEX enrollment_index (enrollment_date),
+  FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id),
+  FOREIGN KEY (course_id) REFERENCES COURSE(course_id)
+);
+ALTER TABLE ENROLLMENT AUTO_INCREMENT=90400;
+-----------------------------------------------COURSE RELATION
+CREATE TABLE IF NOT EXISTS COURSE (
+  course_id BIGINT NOT NULL AUTO_INCREMENT,
+  course_name VARCHAR(50) NOT NULL,
+  department_id INT,
+  PRIMARY KEY (course_id),
+  INDEX course_index (course_name),
+  FOREIGN KEY (department_id) REFERENCES DEPARTMENT(department_id)
+);
+ALTER TABLE COURSE AUTO_INCREMENT=10800;
+-----------------------------------------------DEPARTMENT RELATION
+CREATE TABLE IF NOT EXISTS DEPARTMENT (
+  department_id INT NOT NULL AUTO_INCREMENT,
+  department_name VARCHAR(50) NOT NULL UNIQUE,
+  PRIMARY KEY (department_id)
+);
+CREATE INDEX department_name_index ON DEPARTMENT(department_name);
+-----------------------------------
+INSERT INTO department(department_name)
+VALUES
+	('Faculty of Engineering'), 
+	('Faculty of Management Sciences'), 
+	('Faculty of Natural Sciences');
+-----------------------------------------------REFERRAL_ADMISSION RELATION
+CREATE TABLE IF NOT EXISTS REFERRAL_ADMISSION (
+  ref_admission_id BIGINT NOT NULL AUTO_INCREMENT,
+  ref_admission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_id BIGINT,
+  ref_reason_id BIGINT,
+  PRIMARY KEY (ref_admission_id),
+  INDEX ref_admission_index (ref_admission_date),
+  FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id),
+  FOREIGN KEY (ref_reason_id) REFERENCES REFERRAL_REASON(ref_reason_id)
+);
+ALTER TABLE REFERRAL_ADMISSION AUTO_INCREMENT=10200;
+-----------------------------------------------REFERRAL_REASON RELATION
+CREATE TABLE IF NOT EXISTS REFERRAL_REASON (
+  ref_reason_id BIGINT NOT NULL AUTO_INCREMENT,
+  ref_reason_name VARCHAR(50) NOT NULL,
+  ref_reason_description TEXT NOT NULL,
+  PRIMARY KEY (ref_reason_id)
+);
+
+CREATE INDEX ref_reason_index ON REFERRAL_REASON(ref_reason_name);
+ALTER TABLE REFERRAL_REASON AUTO_INCREMENT=6100;
+-----------------------------------------------FAQ RELATION
+CREATE TABLE IF NOT EXISTS FAQ (
+  faq_id INT NOT NULL AUTO_INCREMENT,
+  faq_id_description TEXT NOT NULL,
+  faq_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  stu_id BIGINT,
+  PRIMARY KEY (faq_id),
+  FOREIGN KEY (stu_id) REFERENCES STUDENT(stu_id)
+);
+CREATE INDEX faq_index ON FAQ (faq_date);
+--------------------
+INSERT INTO faq(`faq_id_description`, `stu_id`)
+VALUES
+('What is Student Counselling?', 22222200),
+('Who is the best counsellor', 22222202),
+('When can i visit a counsellor', 22222202);
+
+-----------------------------------------------FAQ_RESPONSE RELATION
+CREATE TABLE IF NOT EXISTS FAQ_RESPONSE (
+  faq_response_id INT NOT NULL AUTO_INCREMENT,
+  faq_response_header VARCHAR(50) NOT NULL UNIQUE,
+  faq_response_description TEXT NOT NULL,
+  faq_response_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  faq_id INT,
+  admin_id BIGINT,
+  PRIMARY KEY (faq_response_id),
+  FOREIGN KEY (faq_id) REFERENCES FAQ(faq_id),
+  FOREIGN KEY (admin_id) REFERENCES ADMINISTRATOR(admin_id)
+);

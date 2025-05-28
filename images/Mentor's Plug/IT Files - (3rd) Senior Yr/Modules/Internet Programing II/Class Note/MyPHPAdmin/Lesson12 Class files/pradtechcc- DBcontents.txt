@@ -1,0 +1,6 @@
+staffnum,surname,firstnames,said,dept,position,emptype,email,empdate,createdate,notes
+2401,Ramdeyal,Pradesh,8507201234081,ICT,Lecturer,academic,ramdeyal,01-Oct-12,24-Jun-24,blabla1
+2402,Radebe,Obed,7407215402083,MKT,Hod,academic,radebe.obed,01-Nov-15,24-Jun-24,blabla2
+2403,Zuma,Jacob,8607201234081,ICT,Lecturer,academic,Jzuma,01-Jan-12,24-Jun-24,blabla3
+2404,Dlamini,Nelly,8503241234081,MKT,secretary,admin,Nelly,10-Feb-12,24-Jun-24,blabla4
+2405,Pillay,Fionia,9405271235083,ICT,technician,admin,PillayF,01-Apr-12,24-Jun-24,blabla5
